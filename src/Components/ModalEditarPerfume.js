@@ -95,52 +95,79 @@ function ModalEditarPerfume({ perfume, setModalEditar, setPerfumes, onSuccess })
                         <span className="text-red-300 text-md cursor-pointer" onClick={() => setModalEditar(false)}>✖</span>
                     </div>
 
+                    <div className="bg-yellow-900/30 border border-yellow-500/20 rounded-xl p-4 flex gap-4 items-center">
 
-                    <div className="bg-zinc-800 w-full rounded-lg p-3 mt-4">
+                        {/* Imagen */}
+                        <img
+                            src={`http://localhost:3000/uploads/${perfume.imagen_url}`}
+                            alt={perfume.nombre_perfume}
+                            className="w-20 h-20 object-cover rounded-lg bg-black"
+                        />
 
-                        <img className="h-20 w-15 m-3" src={`http://localhost:3000/uploads/${perfume.imagen_url}`} alt={perfume.nombre_perfume} />
+                        {/* Información */}
+                        <div className="flex flex-col">
 
-                        <p>Producto seleccionado</p>
-                        <p>{perfume.nombre_perfume}</p>
-                        <p>{perfume.nombre_marca}</p>
-                        <p>{perfume.descripcion_genero}</p>
-                        {/* <p className="text-xs text-yellow-400 uppercase tracking-widest">
-                            Fragancia seleccionada
-                        </p>
-                        <p className="text-white font-medium">
-                            {perfume.nombre_perfume}
-                        </p> */}
+                            <span className="text-xs uppercase tracking-widest text-yellow-400 font-semibold">
+                                Producto seleccionado
+                            </span>
+
+                            <h3 className="text-white text-lg font-semibold">{perfume.nombre_perfume}</h3>
+
+                            <div className="flex gap-2 mt-2">
+                                <span className="text-xs bg-black/40 text-gray-300 px-2 py-1 rounded-md">
+                                    Marca: {perfume.nombre_marca}
+                                </span>
+
+                                <span className="text-xs bg-black/40 text-gray-300 px-2 py-1 rounded-md">
+                                    Género: {perfume.descripcion_genero}
+                                </span>
+                            </div>
+                        </div>
                     </div>
+
                     <form onSubmit={EditarPerfume}>
+                        <div className='flex gap-3 w-full'>
+                            <span className='flex-1 justify-center items-center p-6 text-white'>Decant 3ml</span>
+                            <span className='flex-1 justify-center items-center p-6 text-white'>Decant 5ml</span>
+
+                        </div>
 
                         <div className='flex gap-3 w-full'>
-                            <span className='flex-1 justify-center items-center p-6'>Decant 3ml</span>
-                            <span className='flex-1 justify-center items-center p-6'>Decant 5ml</span>
+                            <div className='relative flex-1'>
+                                <span className='absolute left-3 top-1/2 -translate-y-1/2 text-yellow-400'>$</span>
+                                <input type='number' inputMode="numeric" name="precio_decant_3ml" pattern="\d*" value={dataForm.precio_decant_3ml} onChange={handleChange}
+                                    className='w-full pl-8 bg-gray-700 text-white rounded-md py-2 outline-none' />
+                            </div>
 
-                            {/* // className="text-gray-400 text-sm o-center mt-4"> */}
-                            {/* ¿Estás seguro que deseas restaurar el perfume
-                        <span className="italic text-white"> “{perfume.nombre_perfume}”</span>? */}
+                            <div className='relative flex-1'>
+                                <span className='absolute left-3 top-1/2 -translate-y-1/2 text-yellow-400'>$</span>
+                                <input type='number' name="precio_decant_5ml" value={dataForm.precio_decant_5ml} onChange={handleChange}
+                                    className='w-full pl-8 bg-gray-700 text-white rounded-md py-2 outline-none' />
+                            </div>
+                        </div>
+
+                        <div className='flex gap-3 w-full'>
+                            <span className='flex-1 justify-center items-center p-6 text-white'>Decant 10ml</span>
+                            <span className='flex-1 justify-center items-center p-6 text-white'>Botella 100ml</span>
                         </div>
 
 
                         <div className='flex gap-3 w-full'>
-                            <input type='number' inputMode="numeric" name="precio_decant_3ml" pattern="\d*" value={dataForm.precio_decant_3ml} onChange={handleChange}
-                            className='flex-1 justify-center items-center ' />
-                            <input type='number' name="precio_decant_5ml" value={dataForm.precio_decant_5ml} onChange={handleChange} 
-                            className='flex-1 justify-center items-center ' />
-                        </div>
+                            <div className="relative flex-1">
+                                <span className="absolute left-3 top-1/2 -translate-y-1/2 text-yellow-400">
+                                    $
+                                </span>
+                                <input type="text" name="precio_decant_10ml" value={dataForm.precio_decant_10ml}
+                                    onChange={handleChange}
+                                    className="w-full pl-8 bg-gray-700 text-white rounded-md py-2 outline-none" />
+                            </div>
 
-                        <div className='flex gap-3 w-full'>
-                            <span className='flex-1 justify-center items-center p-6'>Decant 10ml</span>
-                            <span className='flex-1 justify-center items-center p-6'>Botella 100ml</span>
-                        </div>
+                            <div className="relative flex-1">
+                                <span className="absolute left-3 top-1/2 -translate-y-1/2 text-yellow-400"> $</span>
+                                <input type='number' name="precio_botella" value={dataForm.precio_botella} onChange={handleChange}
+                                    className='w-full pl-8 bg-gray-700 text-white rounded-md py-2 outline-none' />
+                            </div>
 
-
-                        <div className='flex gap-3 w-full'>
-                            <input type='number' name="precio_decant_10ml" value={dataForm.precio_decant_10ml} onChange={handleChange}
-                             className='flex-1 justify-center items-center ' />
-                            <input type='number' name="precio_botella" value={dataForm.precio_botella} onChange={handleChange}
-                            className='flex-1 justify-center items-center ' />
                         </div>
 
 

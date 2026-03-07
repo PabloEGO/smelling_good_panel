@@ -1,12 +1,24 @@
 import React from 'react'
+import { useEffect, useState } from 'react'
+export const ListadoMarcas = () => {
+    const [marcas, setMarcas] = useState([]);
 
-export const ListadoMarcas = ({marcas}) => {
+    const cargarMarcas = () => {
+        fetch("http://localhost:3000/marcas") // 👈 endpoint GET
+            .then((res) => res.json())
+            .then((data) => {
+                console.log(data);
+                setMarcas(data.resultado);
+            })
+    }
 
+    useEffect(() => {
+        cargarMarcas();
+    }, [])
 
-
-  return (
-    <div>
-         {marcas.length === 0 && <h1>No hay Marcas...</h1>}
+    return (
+        <div>
+            {marcas.length === 0 && <h1>No hay Marcas...</h1>}
 
             {marcas.map(mar => (
                 <div key={mar.id_marca}>
@@ -14,7 +26,7 @@ export const ListadoMarcas = ({marcas}) => {
                     <p>Marcas</p><br />
                     <p>{mar.nombre_marca} Id Marca {mar.id_marca}</p> <br></br>
                     <img style={{ height: 150, width: 120 }} src={`http://localhost:3000/uploads/${mar.img_marca}`} alt={mar.nombre_marca} />
-                    
+
                     {/* {per.id_estatus === 1 &&
                         <>
                             <button onClick={() => {
@@ -25,7 +37,7 @@ export const ListadoMarcas = ({marcas}) => {
                                 setPerfumeSeleccionado(per);
                                 setModalEliminar(true);
                             }}>Eliminar</button> */}
-                        {/* </> */}
+                    {/* </> */}
                     {/* // } */}
 
                     {/* {per.id_estatus === 2 &&
@@ -34,11 +46,11 @@ export const ListadoMarcas = ({marcas}) => {
                                 setPerfumeSeleccionado(per);
                                 setModalRestaurar(true);
                             }} >Restaurar Perfume</button> */}
-                            {/* <button onClick={() => {
+                    {/* <button onClick={() => {
                                 setPerfumeSeleccionado(per);
                                 setModalEliminar(true);
                             }}>Eliminar</button> */}
-                        {/* </>
+                    {/* </>
                     } */}
 
 
@@ -50,8 +62,8 @@ export const ListadoMarcas = ({marcas}) => {
 
             ))}
 
-    </div>
-  )
+        </div>
+    )
 }
 
 

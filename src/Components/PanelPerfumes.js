@@ -17,6 +17,7 @@ function PanelPerfumes({onSuccess}) {
     });
 
     const [file,setFile] = useState(null);
+    const [filePreview, setFilePreview] = useState(null);
 
     useEffect(() => {
         fetch("http://localhost:3000/marcas") 
@@ -60,7 +61,14 @@ function PanelPerfumes({onSuccess}) {
     };
 
     const handleFile = (e) => {
-        setFile(e.target.files[0]);
+
+        let archivo = e.target.files[0];
+        setFile(archivo);
+
+        if(archivo){
+            const url = URL.createObjectURL(archivo);
+            setFilePreview(url);
+        }
 
     }
 
@@ -125,6 +133,12 @@ function PanelPerfumes({onSuccess}) {
 
                 <h3>Cargar imagen </h3>
                 <input type="file" accept="image/*" name="imagen" onChange={handleFile}/>
+                {filePreview && (
+                <img src={filePreview} alt={file} className="h-20 w-25"></img>
+
+                )
+                
+                }
                 <br />
 
                 <h3>Marca: </h3>

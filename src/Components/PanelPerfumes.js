@@ -104,7 +104,9 @@ function PanelPerfumes({ onSuccess }) {
             .then(res => res.json())
             .then(data => {
                 console.log("Guardado:", data);
-                navigate("/perfumes");
+                // navigate("/perfumes");
+                navigate("/main/perfumes");
+
             })
             .catch(err => console.error(err));
     };
@@ -267,8 +269,8 @@ function PanelPerfumes({ onSuccess }) {
 
                     {/* Footer */}
                     <div className="flex justify-end gap-4 mt-8">
-                        <button className="text-gray-400 hover:text-white" onClick={() =>{
-                                            navigate("/main/perfumes");
+                        <button className="text-gray-400 hover:text-white" onClick={() => {
+                            navigate("/main/perfumes");
                         }}>
                             Cancelar
                         </button>

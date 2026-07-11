@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { NavLink, useSearchParams } from "react-router";
 import ModalEliminarPerfume from './ModalEliminarPerfume';
 import ModalEditarPerfume from "./ModalEditarPerfume";

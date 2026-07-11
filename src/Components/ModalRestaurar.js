@@ -5,7 +5,7 @@ import React from 'react'
 export const ModalRestaurar = ({ perfume, setModalRestaurar, onSuccess }) => {
 
     const restaurar = () => {
-        fetch(`http://localhost:3000/perfumes/restaurar/${perfume.id_perfume}`, {
+        fetch(`https://smellinggoodbackend-production.up.railway.app/perfumes/restaurar/${perfume.id_perfume}`, {
             method: "PUT"
         })
             .then(() => {

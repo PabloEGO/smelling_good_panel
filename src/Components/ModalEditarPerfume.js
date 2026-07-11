@@ -27,7 +27,7 @@ function ModalEditarPerfume({ perfume, setModalEditar, setPerfumes, onSuccess })
     const EditarPerfume = (e) => {
         e.preventDefault();
 
-        fetch(`http://localhost:3000/perfumes/editar/${perfume.id_perfume}`, {
+        fetch(`https://smellinggoodbackend-production.up.railway.app/perfumes/editar/${perfume.id_perfume}`, {
             method: "PUT",
             headers: {
                 "Content-Type": "application/json"
@@ -99,7 +99,7 @@ function ModalEditarPerfume({ perfume, setModalEditar, setPerfumes, onSuccess })
 
                         {/* Imagen */}
                         <img
-                            src={`http://localhost:3000/uploads/${perfume.imagen_url}`}
+                            src={`https://smellinggoodbackend-production.up.railway.app/uploads/${perfume.imagen_url}`}
                             alt={perfume.nombre_perfume}
                             className="w-20 h-20 object-cover rounded-lg bg-black"
                         />

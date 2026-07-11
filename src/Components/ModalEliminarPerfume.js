@@ -16,7 +16,7 @@ function ModalEliminarPerfume({ perfume, setModalEliminar, setPerfumes, onSucces
   // };
 
   const eliminar = () => {
-    fetch(`http://localhost:3000/perfumes/suspender/${perfume.id_perfume}`, {
+    fetch(`https://smellinggoodbackend-production.up.railway.app/perfumes/suspender/${perfume.id_perfume}`, {
       method: "PUT"
     })
       .then(() => {

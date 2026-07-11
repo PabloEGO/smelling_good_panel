@@ -26,7 +26,7 @@ function PanelPerfumes({ onSuccess }) {
     }
 
     useEffect(() => {
-        fetch("http://localhost:3000/marcas/select")
+        fetch("https://smellinggoodbackend-production.up.railway.app/marcas/select")
             .then((res) => res.json())
             .then((dataMarca) => {
                 console.log("Hola  ", dataMarca.items);
@@ -42,7 +42,7 @@ function PanelPerfumes({ onSuccess }) {
     }, [])
 
     useEffect(() => {
-        fetch("http://localhost:3000/generos")
+        fetch("https://smellinggoodbackend-production.up.railway.app/generos")
             .then((res) => res.json())
             .then((dataGen) => {
                 console.log(dataGen);

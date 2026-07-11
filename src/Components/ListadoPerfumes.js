@@ -21,7 +21,26 @@ function ListadoPerfumes() {
 
     const [search,setSearch] = useState("");
 
+    // const cargarPerfumes = () => {
+    //     fetch(`http://localhost:3000/perfumes?page=${page}&search=${search}`)
+    //         .then((res) => res.json())
+    //         .then((data) => {
+    //             console.log(data);
+    //             setPerfumes(data.items);
+    //             setTotalPages(data.totalPages);
+    //             setDetailsData(data);
+    //         })
+    // }
 
+const cargarPerfumes = useCallback(() => {
+    fetch(`http://localhost:3000/perfumes?page=${page}&search=${search}`)
+        .then((res) => res.json())
+        .then((data) => {
+            setPerfumes(data.items);
+            setTotalPages(data.totalPages);
+            setDetailsData(data);
+        });
+}, [page, search]);
 
 
     const cambiarPagina = (nuevaPagina) => {
@@ -37,16 +56,6 @@ function ListadoPerfumes() {
 
 
     useEffect(() => {
-    const cargarPerfumes = () => {
-        fetch(`http://localhost:3000/perfumes?page=${page}&search=${search}`)
-            .then((res) => res.json())
-            .then((data) => {
-                console.log(data);
-                setPerfumes(data.items);
-                setTotalPages(data.totalPages);
-                setDetailsData(data);
-            })
-    }
 
     const timeout = setTimeout(() => {
         cargarPerfumes();
@@ -54,11 +63,11 @@ function ListadoPerfumes() {
 
     return () => clearTimeout(timeout);
 
-}, [page,search]);
+}, [cargarPerfumes]);
 
 // useEffect(() => {
 //     cargarPerfumes();
-// }, [page])
+// }, [page,serch])
 
     return (
         <div className="bg-[#0b0f14] text-white min-h-screen p-6">

@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useCallback } from 'react'
 import { useEffect, useState } from 'react'
 import AgregarMarca from './AgregarMarca';
  import { useSearchParams } from "react-router";
@@ -14,22 +14,34 @@ export const ListadoMarcas = () => {
     const [detailsData, setDetailsData] = useState([]);
     const marcasCount = Math.min(page * 6, detailsData.totalItems);
 
-  
+    // const cargarMarcas = useCallback(() => {
+    //     fetch(`http://localhost:3000/marcas?page=${page}`)
+    //         .then((res) => res.json())
+    //         .then((data) => {
+    //             console.log(data);
+    //             setMarcas(data.items);
+    //             setTotalPages(data.totalPages);
+    //             setDetailsData(data);
+    //         })
+    // }
 
-    useEffect(() => {
+    // useEffect(() => {
+    //     cargarMarcas();
+    // }, [page])
 
-          const cargarMarcas = () => {
-        fetch(`http://localhost:3000/marcas?page=${page}`)
-            .then((res) => res.json())
-            .then((data) => {
-                console.log(data);
-                setMarcas(data.items);
-                setTotalPages(data.totalPages);
-                setDetailsData(data);
-            })
-    }
-        cargarMarcas();
-    }, [page])
+    const cargarMarcas = useCallback(() => {
+    fetch(`http://localhost:3000/marcas?page=${page}`)
+        .then((res) => res.json())
+        .then((data) => {
+            setMarcas(data.items);
+            setTotalPages(data.totalPages);
+            setDetailsData(data);
+        });
+}, [page]);
+
+useEffect(() => {
+    cargarMarcas();
+}, [cargarMarcas]);
 
 
 const cambiarPagina = (nuevaPagina) => {

@@ -94,7 +94,7 @@ function PanelPerfumes({ onSuccess }) {
         formData.append("id_genero", dataForm.id_genero);
         formData.append("id_estatus", dataForm.id_estatus);
 
-        fetch("http://localhost:3000/perfumes", {
+        fetch("https://smellinggoodbackend-production.up.railway.app/perfumes", {
             method: "POST",
             // headers: {
             //     "Content-Type": "application/json"

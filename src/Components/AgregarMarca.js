@@ -45,7 +45,7 @@ export const AgregarMarca = ({ setModalAdd,onSuccess }) => {
         formData.append("nombre_marca", dataForm.nombre_marca);
         formData.append("img_marca", file);
 
-        fetch("http://localhost:3000/marcas", {
+        fetch("https://smellinggoodbackend-production.up.railway.app/marcas", {
             method: "POST",
             body: formData
         })

@@ -33,7 +33,7 @@ function ListadoPerfumes() {
     // }
 
 const cargarPerfumes = useCallback(() => {
-    fetch(`http://localhost:3000/perfumes?page=${page}&search=${search}`)
+    fetch(`https://smellinggoodbackend-production.up.railway.app/perfumes?page=${page}&search=${search}`)
         .then((res) => res.json())
         .then((data) => {
             setPerfumes(data.items);

@@ -30,7 +30,7 @@ export const ListadoMarcas = () => {
     // }, [page])
 
     const cargarMarcas = useCallback(() => {
-    fetch(`http://localhost:3000/marcas?page=${page}`)
+    fetch(`https://smellinggoodbackend-production.up.railway.app/marcas?page=${page}`)
         .then((res) => res.json())
         .then((data) => {
             setMarcas(data.items);

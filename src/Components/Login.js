@@ -29,7 +29,7 @@ export const Login = () => {
       password: ""
     })
 
-    fetch("http://localhost:3000/users/login", {
+    fetch("https://smellinggoodbackend-production.up.railway.app/users/login", {
       method: "POST",
       headers: {
         "Content-Type": "application/json"

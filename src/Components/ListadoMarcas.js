@@ -14,7 +14,11 @@ export const ListadoMarcas = () => {
     const [detailsData, setDetailsData] = useState([]);
     const marcasCount = Math.min(page * 6, detailsData.totalItems);
 
-    const cargarMarcas = () => {
+  
+
+    useEffect(() => {
+
+          const cargarMarcas = () => {
         fetch(`http://localhost:3000/marcas?page=${page}`)
             .then((res) => res.json())
             .then((data) => {
@@ -24,8 +28,6 @@ export const ListadoMarcas = () => {
                 setDetailsData(data);
             })
     }
-
-    useEffect(() => {
         cargarMarcas();
     }, [page])
 

@@ -21,16 +21,7 @@ function ListadoPerfumes() {
 
     const [search,setSearch] = useState("");
 
-    const cargarPerfumes = () => {
-        fetch(`http://localhost:3000/perfumes?page=${page}&search=${search}`)
-            .then((res) => res.json())
-            .then((data) => {
-                console.log(data);
-                setPerfumes(data.items);
-                setTotalPages(data.totalPages);
-                setDetailsData(data);
-            })
-    }
+
 
 
     const cambiarPagina = (nuevaPagina) => {
@@ -46,6 +37,16 @@ function ListadoPerfumes() {
 
 
     useEffect(() => {
+    const cargarPerfumes = () => {
+        fetch(`http://localhost:3000/perfumes?page=${page}&search=${search}`)
+            .then((res) => res.json())
+            .then((data) => {
+                console.log(data);
+                setPerfumes(data.items);
+                setTotalPages(data.totalPages);
+                setDetailsData(data);
+            })
+    }
 
     const timeout = setTimeout(() => {
         cargarPerfumes();

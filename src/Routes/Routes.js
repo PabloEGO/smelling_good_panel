@@ -1,5 +1,5 @@
 import React from 'react'
-import { BrowserRouter, Routes, Route, Navigate } from 'react-router'
+import { BrowserRouter, Routes, Route } from 'react-router'
 import { PrivateRoute } from './PrivateRoute'
 import { MainLayout } from '../Components/MainLayout'
 import { ListadoMarcas } from '../Components/ListadoMarcas'

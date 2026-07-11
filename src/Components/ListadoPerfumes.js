@@ -1,30 +1,63 @@
 import { useEffect, useState } from "react";
-import { NavLink } from "react-router";
+import { NavLink, useSearchParams } from "react-router";
 import ModalEliminarPerfume from './ModalEliminarPerfume';
 import ModalEditarPerfume from "./ModalEditarPerfume";
 import { ModalRestaurar } from './ModalRestaurar';
 function ListadoPerfumes() {
-    // { perfumes, setModalEditar, setModalEliminar, setPerfumeSeleccionado, setModalRestaurar }) {
-
     const [modalEditar, setModalEditar] = useState(false);
     const [modalEliminar, setModalEliminar] = useState(false);
     const [modaLRestaurar, setModalRestaurar] = useState(false);
     const [perfumes, setPerfumes] = useState([]);
+    const [searchParams, setSearchParams] = useSearchParams();
+    const page = Number(searchParams.get("p")) || 1;
+    const [totalPages, setTotalPages] = useState(1);
+    const [detailsData, setDetailsData] = useState([]);
+
+
 
     const [perfumeSeleccionado, setPerfumeSeleccionado] = useState(false);
+    const perfumeCount = Math.min(page * 2, detailsData.totalItems);
+    console.log(perfumeCount);
+
+    const [search,setSearch] = useState("");
 
     const cargarPerfumes = () => {
-        fetch("http://localhost:3000/perfumes") // 👈 endpoint GET
+        fetch(`http://localhost:3000/perfumes?page=${page}&search=${search}`)
             .then((res) => res.json())
             .then((data) => {
                 console.log(data);
-                setPerfumes(data);
+                setPerfumes(data.items);
+                setTotalPages(data.totalPages);
+                setDetailsData(data);
             })
     }
 
+
+    const cambiarPagina = (nuevaPagina) => {
+        setSearchParams({ p: nuevaPagina });
+    };
+
+    const handleSearch= (e) => {
+        setSearch(e.target.value);
+            setSearchParams({ p: 1 });
+
+        console.log("Search ==> " , search);
+    }
+
+
     useEffect(() => {
+
+    const timeout = setTimeout(() => {
         cargarPerfumes();
-    }, [])
+    }, 500);
+
+    return () => clearTimeout(timeout);
+
+}, [page,search]);
+
+// useEffect(() => {
+//     cargarPerfumes();
+// }, [page])
 
     return (
         <div className="bg-[#0b0f14] text-white min-h-screen p-6">
@@ -54,6 +87,8 @@ function ListadoPerfumes() {
                 <input
                     type="text"
                     placeholder="Buscar por nombre, marca..."
+                    value={search}
+                    onChange={handleSearch}
                     className="w-full max-w-md bg-[#121821] border border-gray-700 rounded-lg px-4 py-2 text-sm focus:outline-none"
                 />
 
@@ -165,67 +200,91 @@ function ListadoPerfumes() {
                                         }
                                     </div>
                                 </td>
-
                             </tr>
                         ))}
                     </tbody>
 
+                    {/* <div classname="flex items-center justify-between">
+                        <span>Mostrando 2 de 5 perfumes</span>
+
+                        <div className="flex items-center gap-2">
+  {Array.from({ length: totalPages }, (_, i) => (
+                            <button key={i} onClick={() => cambiarPagina(i + 1)}>
+                                {i + 1}
+                            </button>
+                        ))}
+
+                        </div>
+                      
+                    </div> */}
+
+
                 </table>
 
-                
-                    {modalEditar && (
-                        <ModalEditarPerfume
-                            perfume={perfumeSeleccionado}
-                            setModalEditar={setModalEditar}
-                            setPerfumes={setPerfumes}
-                            onSuccess={cargarPerfumes}
-                        />)}
-        
-                    {modalEliminar && (
-                        <ModalEliminarPerfume
-                            perfume={perfumeSeleccionado}
-                            setModalEliminar={setModalEliminar}
-                            setPerfumes={setPerfumes}
-                            onSuccess={cargarPerfumes}
-                        />)}
-        
-                    {modaLRestaurar && (
-                        <ModalRestaurar
-                            perfume={perfumeSeleccionado}
-                            setModalRestaurar={setModalRestaurar}
-                            setPerfumes={setPerfumes}
-                            onSuccess={cargarPerfumes}
-                        />)}
+
+                <div className="flex items-center justify-between">
+                    <p className="text-sm text-gray-400">
+                        Mostrando {perfumeCount} de {detailsData.totalItems} perfumes
+                    </p>
+
+                    <div className="flex items-center gap-2 p-3">
+                        {/* {Array.from({ length: totalPages }, (_, i) => (
+                                {i == page ?  }
+                            <button key={i} onClick={() => cambiarPagina(i + 1)}>
+                                {i + 1}
+                            </button> */}
+                        {Array.from({ length: totalPages }, (_, i) => {
+                            const pageNumber = i + 1;
+
+                            return (
+                                <button
+                                    key={pageNumber}
+                                    onClick={() => cambiarPagina(pageNumber)}
+                                    className={pageNumber === page ? "bg-yellow-600 font-semibold hover:opacity-90 text-black px-3 py-1 rounded" : "px-3 py-1"}
+                                >
+                                    {pageNumber}
+                                </button>
+                            );
+                        })}
+
+                    </div>
+                </div>
+
+
+                {modalEditar && (
+                    <ModalEditarPerfume
+                        perfume={perfumeSeleccionado}
+                        setModalEditar={setModalEditar}
+                        setPerfumes={setPerfumes}
+                        onSuccess={cargarPerfumes}
+                    />)}
+
+                {modalEliminar && (
+                    <ModalEliminarPerfume
+                        perfume={perfumeSeleccionado}
+                        setModalEliminar={setModalEliminar}
+                        setPerfumes={setPerfumes}
+                        onSuccess={cargarPerfumes}
+                    />)}
+
+                {modaLRestaurar && (
+                    <ModalRestaurar
+                        perfume={perfumeSeleccionado}
+                        setModalRestaurar={setModalRestaurar}
+                        setPerfumes={setPerfumes}
+                        onSuccess={cargarPerfumes}
+                    />)}
 
             </div>
 
             {/* Footer abajo */}
             <div className="flex justify-between mt-6 text-xs text-gray-500">
                 <p>© 2024 SMELLING GOOD LUXURY PERFUMERY</p>
-                <div className="flex gap-4">
-                    <span>Términos de uso</span>
-                    <span>Soporte técnico</span>
-                </div>
+
             </div>
 
         </div>
-        /*   
-                    {perfumes.length === 0 && <h1>No hay perfumes...</h1>}
-                    <table border={2} className="px-15">
-                        <thead className="border-b border-zinc-800 bg-gray-700 table-auto ">
-                            <tr>
-                                <th className="text-gray-300 font-bold">IMAGEN</th>
-                                <th className="text-gray-300 font-bold">PERFUME</th>
-                                <th className="text-gray-300 font-bold">MARCA</th>
-                                <th className="text-gray-300 font-bold">DECANT 3ML</th>
-                                <th className="text-gray-300 font-bold">DECANT 5ML</th>
-                                <th className="text-gray-300 font-bold">DECANT 10ML</th>
-                                <th className="text-gray-300 font-bold text-sm">BOTELLA 100ML</th>
-                                <th className="text-gray-300 font-bold">ESTATUS</th>
-                                <th className="text-gray-300 font-bold">ACCIONES</th>
-                            </tr>
-                        </thead>
-        */
+    
     )
 }
 export default ListadoPerfumes;

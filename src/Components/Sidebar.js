@@ -1,6 +1,12 @@
-import React from 'react'
-import { NavLink } from 'react-router'
+import { NavLink,useNavigate } from 'react-router'
 export const Sidebar = () => {
+const navigate = useNavigate();
+const name = localStorage.getItem("nombre");
+  const logOut = () =>{
+    localStorage.removeItem("token");
+    localStorage.removeItem("nombre");
+    navigate("/");
+  }
   return (
     <div className="w-64 h-screen bg-[#0b0f14] text-white flex flex-col justify-between p-4">
       <div>
@@ -13,7 +19,7 @@ export const Sidebar = () => {
               SMELLING GOOD
             </h1>
             <p className="text-[10px] text-yellow-500">
-              Nombre Usuario
+              {name}
             </p>
           </div>
         </div>
@@ -26,7 +32,7 @@ export const Sidebar = () => {
             </button>
           </NavLink> */}
           <NavLink
-            to="/perfumes" end
+            to="/main/perfumes" end
             className={({ isActive }) =>
               `flex items-center gap-3 px-4 py-2 rounded-lg ${isActive ? "bg-yellow-600/20 text-yellow-400" : "text-white"
               }`
@@ -41,7 +47,7 @@ export const Sidebar = () => {
               Marcas
             </button>
           </NavLink> */}
-          <NavLink to="/marcas" className={({ isActive }) =>
+          <NavLink to="/main/marcas" className={({ isActive }) =>
               `flex items-center gap-3 px-4 py-2 rounded-lg ${isActive ? "bg-yellow-600/20 text-yellow-400" : "text-white"
               }`
             }
@@ -53,7 +59,7 @@ export const Sidebar = () => {
 
       {/* Bottom */}
       <div>
-        <button className="flex items-center gap-3 text-red-400 hover:bg-red-500/10 px-4 py-2 rounded-lg transition w-full">
+        <button onClick={logOut} className="flex items-center gap-3 text-red-400 hover:bg-red-500/10 px-4 py-2 rounded-lg transition w-full">
           <span>🚪</span>
           Cerrar sesión
         </button>

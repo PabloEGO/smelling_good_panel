@@ -26,10 +26,10 @@ function PanelPerfumes({ onSuccess }) {
     }
 
     useEffect(() => {
-        fetch("http://localhost:3000/marcas")
+        fetch("http://localhost:3000/marcas/select")
             .then((res) => res.json())
             .then((dataMarca) => {
-                console.log(dataMarca.resultado);
+                console.log("Hola  ", dataMarca.items);
                 setMarcas(dataMarca.resultado);
 
                 if (dataMarca.resultado.length > 0) {
@@ -129,7 +129,7 @@ function PanelPerfumes({ onSuccess }) {
                         </div>
 
                         <nav className="px-4 py-2 text-sm bg-[#1a1a1a] border border-yellow-800/40 text-gray-300 rounded-lg hover:bg-[#222]">
-                            <NavLink to="/perfumes">Volver al Listado</NavLink>
+                            <NavLink to="/main/perfumes">Volver al Listado</NavLink>
                         </nav>
                     </div>
 
@@ -268,7 +268,7 @@ function PanelPerfumes({ onSuccess }) {
                     {/* Footer */}
                     <div className="flex justify-end gap-4 mt-8">
                         <button className="text-gray-400 hover:text-white" onClick={() =>{
-                                            navigate("/perfumes");
+                                            navigate("/main/perfumes");
                         }}>
                             Cancelar
                         </button>
